@@ -1,0 +1,12 @@
+The process:
+    Draw up the desired interface for the subject,
+    Write up the desired job with it.
+
+    Draw up the tests, ( on paper, not in code ), for the subject.
+
+    Write up tests in code
+
+    Create the interface, with the docs
+    Create the code that's imported, with the stubs
+
+    Fulfill the stubs, to fulfill the tests.
