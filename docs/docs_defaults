@@ -1,0 +1,56 @@
+Notes:
+    We need to make the structure more DRY
+    Maybe remove exports, and have exports be generated into another file?
+    Is exports really needed? Isn't it just a general version of the 
+    interface that's generated later?
+
+docs_defaults:
+
+Overview:
+===
+
+exports:
+===
+
+code structure:
+===
+
+------------------------------------------------------------------------------------
+
+( for a function )
+
+## Export name
+
+### Signature
+
+### Overview
+
+### Aspects
+* pure?     : bool
+* async?    : bool
+* exceptions? :
+* * "exceptionName" => the reason why the exception is thrown
+
+### Parameters
+
+### Return value
+
+### Tests
+* test description
+
+------------------------------------------------------------------------------------
+
+( for an object )
+
+## Export name
+### Entries Description:
+* keys      : ( type ) description
+* values    : ( type ) description
+
+------------------------------------------------------------------------------------
+
+( for a class )
+
+( this should be similar to the functions, but it's going to be awkward. )
+
+------------------------------------------------------------------------------------
