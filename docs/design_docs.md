@@ -21,7 +21,7 @@ Which is fantastic for a practise tool.
 exports:
 ===
 
-* A function to creates the store
+* A function to create the store
 * * A frozen object containing the availabe types for the store
 * A function to generate values for the object
 * * A frozen object that contains the uniqueness of the values in the store
@@ -48,7 +48,7 @@ code structure:
 
 ------------------------------------------------------------------------------------
 
-## A function to creates the store
+## A function to create the store
 
 ### Signature
 ( valuesType="string", valuesCount=10 ) => {};
@@ -82,6 +82,8 @@ The function is to:
 
 ### Tests
 * It returns an object with the keys : [ "types", "hasBeenChanged", "initialValueCount", "values" ]
+
+* 'types' property matches the given type
 
 * "values" property is an array of values, with the type of type given
 
@@ -123,7 +125,7 @@ The values should adhere to the uniqueness object.
 
 ### Tests
 * Check that the array adheres to the uniqueness object
-* Check that the expected number of items are return
+* Check that the expected number of items are in the array
 * Check that the values are of the expected type
 
 ------------------------------------------------------------------------------------
