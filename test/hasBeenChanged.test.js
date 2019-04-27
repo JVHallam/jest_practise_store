@@ -35,7 +35,7 @@ describe("A function that checks if the store has been changed", () => {
         forEachStoreType( (store, type) => {
             //Push in a a value of the given type
             const firstValue = (store.values.length) ? store.values[0] : undefined;
-            store.values.append(firstValue);
+            store.values.push(firstValue);
             expect(hasBeenChanged(store)).toBe(true);
         });
     });
