@@ -63,9 +63,52 @@ export function generateValues(valuesType=typeof(""), valuesCount=10){
     return [...Array(valuesCount)].map( ( _, index) => (defaultValuesStore[valuesType])( index ) );
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export function hasBeenChanged(){
+/**
+ * Return whether or not the values match.
+ * @param {*} a 
+ * @param {*} b 
+ */
+const compareValuesValue = ( a, b ) => {
+    if( typeof(a) != typeof([]) ){
+        return a === b;
+    }
+    else{
+        const match = a
+            .map( (value, index) => compareValuesValue(value, b[index]) )
+            .reduce( (accumulator, x) => accumulator && x );
+        return match;
+    }
+}
 
+const wereValuesAltered = ( store ) => {
+    try{
+        const expectedValues = generateValues( store.type, store.initialValueCount );
+        const matchingValuesArray = expectedValues.map( (value, index) => compareValuesValue(value, store.values[index]));
+        const wasAValueAltered = matchingValuesArray.reduce( ( a, x ) => a && x, true);
+        return !wasAValueAltered;
+    }
+    catch(err){
+        return true;
+    }
+}
+
+/**
+ * Check if a store has been altered since it's creation.
+ * @param store - the given store from createStore
+ * @returns whether or not the store was altered
+ */
+export function hasBeenChanged( store ){
+    const wasHasBeenChangedChanged = ( store.hasBeenChanged == true );
+
+    const wasTypeChanged = ( !(store.type in types) );
+
+    const wasLengthChanged = ( store.values.length != store.initialValueCount );
+
+    const doesValuesMatchExpected = wereValuesAltered( store );
+
+    return wasHasBeenChangedChanged || wasTypeChanged || wasLengthChanged || doesValuesMatchExpected;
 }
 
 export function createCleanedStore(){
