@@ -12,7 +12,7 @@ describe("A function to create the store", () => {
         const store = createStore();
 
         const expectedKeys = [
-            "types",
+            "type",
             "hasBeenChanged",
             "initialValueCount",
             "values"
@@ -25,7 +25,7 @@ describe("A function to create the store", () => {
         );
     });
 
-    test("'types' property matches the given type", () => {
+    test("'type' property matches the given type", () => {
         //Should be the array from the frozen object.
         const givenTypes = Object.keys(types);
 
@@ -80,7 +80,7 @@ describe("A function to create the store", () => {
             if(expectedUniqueness){
                 store.values.forEach( value => {
                     //Expect to find the given value, and no more.
-                    const matchingValues = store.filter( findValue => findValue == value );
+                    const matchingValues = store.values.filter( findValue => findValue == value );
                     expect(matchingValues.length).toBe(1);
                 });
             }
@@ -89,7 +89,9 @@ describe("A function to create the store", () => {
 
     test("function throws an exception if given an unrecognised type", () => {
         const nonsenseType = 'this is a failing type';
-
-        expect( createStore(nonsenseType) ).toThrow(/type/);
+        
+        expect(() => {
+            createStore(nonsenseType)
+        }).toThrow();
     });
 });

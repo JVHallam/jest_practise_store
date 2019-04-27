@@ -1,0 +1,53 @@
+This is the process for setting up the tests and stuff:
+    src/index.js 
+        => the interface to the application
+        => setup the interface to the application
+        => each function gets a banner
+        => banner contains "A function to generate values"
+
+    test/main.test.js:
+        => Import each function and object from the interface file
+        => setup 1 describe for each section
+        => setup 1 test for each one in the file
+
+    There needs to be a single test file for each function.
+    Each one will need to import the given interface.
+    Each one will need to have the expected tests.
+    Each one will need to have an immediate failing test in it,
+    so that the programmer realises that that file exists,
+    and nothing has been done with it.
+    The name of the function actualy winds up being more valuable,
+    than the signature for the function.
+    The signature expects more coding to be done, the name is just the name.
+
+    The top level describe is the sub-heading for that section.
+    The file name is the name of the function,
+    the name of the function will have to be defined in the documentation
+
+    => difference between ALL generation and ANY generation
+        => This will be a bonus feature
+        => Generate one test if the test contains the word "ALL"
+        => Generate a number of tests if the test contains the word "ANY"
+
+    Creating tests from lists
+    => A list element should be turned into a test
+    => A list element with a sub list should be mapped into a bunch of tests, e.g.:
+        * We should find the list to contain the types :  
+        * integer
+        * string
+        * object
+
+        to become:
+        => We should find the list to contain the types : integer
+        => We should find the list to contain the types : string
+        => We should find the list to contain the types : object
+    
+    One test for each bullet.
+
+    Test stubs should look like this:
+        test("returns false when ALL the following are met : The types in the array match the type in the object", () => {
+            //Test not yet implemented
+            expect("Test to have been implemented").toBe(true);
+        });
+
+    
