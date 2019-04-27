@@ -24,34 +24,39 @@ describe("A function that checks if the store has been changed", () => {
     const parentTestName = `test that it returns true when ANY of the following are met :`;
     test(`${parentTestName} The store's type has been altered`, () => {
         forEachStoreType( (store, type) => {
+            const alteredStore = {...store};
             //Change the stores type
-            store.type = "This is an invalid type";
-
-            expect(hasBeenChanged(store)).toBe(true);
+            alteredStore.type = "This is an invalid type";
+            expect(hasBeenChanged(alteredStore)).toBe(true);
         });
     });
 
     test(`${parentTestName} The length of values doesn't match the initialCount`, () => {
         forEachStoreType( (store, type) => {
-            //Push in a a value of the given type
-            const firstValue = (store.values.length) ? store.values[0] : undefined;
-            store.values.push(firstValue);
-            expect(hasBeenChanged(store)).toBe(true);
+            const alteredStore = {...store};
+            alteredStore.type = "This is an invalid type";
+
+            const firstValue = (alteredStore.values.length) ? alteredStore.values[0] : undefined;
+            alteredStore.values.push(firstValue);
+            expect(hasBeenChanged(alteredStore)).toBe(true);
         });
     });
 
     test(`${parentTestName} The values in the values array aren't the default values for the given type`, () => {
         forEachStoreType( (store, type) => {
-            //We just need to change a value
-            ( store.values.length ) ? store.values[0] = 10 : null;
-            expect(hasBeenChanged(store)).toBe(true);
+            const duplicateStore = {...store};
+            duplicateStore.values[0] = !!!duplicateStore.values[0];
+
+            //( store.values.length ) ? store.values[0] = 10 : null;
+            expect(hasBeenChanged(duplicateStore)).toBe(true);
         });
     });
 
     test(`${parentTestName} hasBeenChanged is set to true`, () => {
         forEachStoreType( (store, type) => {
-            store.hasBeenChanged = true;
-            expect(hasBeenChanged(store)).toBe(true);
+            const alteredStore = {...store};
+            alteredStore.hasBeenChanged = true;
+            expect(hasBeenChanged(alteredStore)).toBe(true);
         });
     });
 
