@@ -51,7 +51,7 @@ describe("A function that checks if the store has been changed", () => {
     test(`${parentTestName} hasBeenChanged is set to true`, () => {
         forEachStoreType( (store, type) => {
             store.hasBeenChanged = true;
-            expect(hasBeenChanged).toBe(true);
+            expect(hasBeenChanged(store)).toBe(true);
         });
     });
 

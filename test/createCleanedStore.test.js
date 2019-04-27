@@ -23,7 +23,7 @@ describe('A function that creates a "cleaned" version of the store, given to it.
     test("Returns an identical copy of the object if it's not been changed", () => {
         forEachStoreType( ( store, type ) => {
             const cleanedStore = createCleanedStore(store);
-            expect(cleanedStore).toEqual(cleanedStore);
+            expect(store).toEqual(cleanedStore);
         });
     });
 
