@@ -60,7 +60,7 @@ describe("A function that checks if the store has been changed", () => {
     test("returns false when ALL the following are met : ", () => {
         forEachStoreType( (store, type) => {
             //The initialCount matches values length
-            expect(store.values.length).toBe(store.initialCount);
+            expect(store.values.length).toBe(store.initialValueCount);
 
             //The types in the array match the type in the object
             store.values.forEach(value => {
@@ -68,7 +68,7 @@ describe("A function that checks if the store has been changed", () => {
             });
             
             // hasBeenAltered is set to false
-            expect(store.hasBeenAltered).toBe(false);
+            expect(store.hasBeenChanged).toBe(false);
 
             // check that it's false:
             expect(hasBeenChanged(store)).toBe(false);     
