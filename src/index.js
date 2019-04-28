@@ -1,7 +1,8 @@
 
 /**
- * This is a typedef, idk how to use it.
- * This would be considered an Enum.
+ * Enum for the store types
+ * @readonly
+ * @enum {string}
  */
 export const types = Object.freeze({
     [typeof("")] : [typeof("")],
@@ -11,7 +12,9 @@ export const types = Object.freeze({
 });
 
 /**
- * This is an Enum, or a typedef?
+ * Represents whether or not the values for a type are unique within a store.
+ * @readonly
+ * @enum {string}
  */
 export const uniqueness = Object.freeze({
    [typeof("")]     : true,
@@ -20,7 +23,12 @@ export const uniqueness = Object.freeze({
    [typeof(true)]   : false
 });
 
-//Where index is an int => map( (_, index) ) => {}
+/**
+ * Returns a function, based on the type given.
+ * The function is used to generate the default unique values.
+ * Index is expected to be the integer from : [].map( (value, index) => {});
+ * @private
+ */
 const defaultValuesStore = Object.freeze({
     [typeof("")]    : ( index ) => `${index}`,
     [typeof(1)]     : ( index ) => index,
@@ -29,15 +37,20 @@ const defaultValuesStore = Object.freeze({
 }); 
 
 /**
+ * The values store, for use with the rest of the functions.
+ * @typedef {Object} store
+ * @property {string} type - The string from typeof() that represents the types
+ *                           stored in values
+ * @property {bool} hasBeenChanged - have the values been changed?
+ * @property {int} initialValueCount - How many values were in the array at the start?
+ * @property {Array} values - The array of values, of type, type.
+ */
+
+/**
  * Create a store, 
  * That stores an array of a single type.
- * @param valuesType - [The type of the value, based on the typedef]
- * @return {object} [{
- *      type : valuesType,
- *      hasBeenChanged : false,
- *      initialValueCount : valuesCount,
- *      values : [ ... array of values... ]
- * }]
+ * @param {types} valuesType - [The type of the value, based on the typedef]
+ * @return {store} 
  */
 export function createStore( valuesType="string", valuesCount=10 ){
     return {
@@ -50,8 +63,8 @@ export function createStore( valuesType="string", valuesCount=10 ){
 
 /**
  * Generate an array of values, of a given length and type.
- * @param valuesType - The wanted type
- * @param valuesCount - The wanted number
+ * @param {types} valuesType - The wanted type
+ * @param {number} valuesCount - The wanted number
  * @return {Array} [ The array of the given length ]
  * @throws {TypeError} [Throws an error when given an unrecognised type.]
  */
@@ -67,8 +80,8 @@ export function generateValues(valuesType=typeof(""), valuesCount=10){
 /**
  * Return whether or not the values match.
  * Recursively compares lists.
- * @param {*} a 
- * @param {*} b 
+ * @param {*} a - Anything
+ * @param {*} b - To be compared to first
  * @return bool whether or not they matched
  */
 const recursivelyCompareValue = ( a, b ) => {
@@ -84,6 +97,12 @@ const recursivelyCompareValue = ( a, b ) => {
     }
 }
 
+/**
+ * Check if a stores values (the array) have been changed, since it was created.
+ * @private
+ * @param {store} store 
+ * @returns {bool}
+ */
 const wereValuesAltered = ( store ) => {
     try{
         const expectedValues = generateValues( store.type, store.initialValueCount );
@@ -101,8 +120,8 @@ const wereValuesAltered = ( store ) => {
 
 /**
  * Check if a store has been altered since it's creation.
- * @param store - the given store from createStore
- * @returns whether or not the store was altered
+ * @param {store} store - the given store from createStore
+ * @returns {bool} whether or not the store was altered
  */
 export function hasBeenChanged( store ){
     const wasHasBeenChangedChanged = ( store.hasBeenChanged == true );
@@ -118,15 +137,13 @@ export function hasBeenChanged( store ){
 
 /**
  * If the store has been altered, returns a "clean" (un-altered) version of the original store.
- * @param store 
- * @returns store - A new version of the store. Never a reference to the old one.
+ * @param {store} store - To have a "clean" copy made from.
+ * @returns {store} - A new version of the store. Never a reference to the old one.
  */
 export function createCleanedStore( store ){
     
-    //Check if we actually new a new store
     const hasStoreBeenChanged = store.hasBeenChanged || hasBeenChanged(store);
 
-    //Lol, this actually turned out to be all i needed!
     const cleanedStore = ( hasStoreBeenChanged ) ? createStore( store.type, store.initialValueCount ) : {...store};
 
     return cleanedStore;

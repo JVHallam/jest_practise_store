@@ -1,17 +1,18 @@
 {
-  "name": "jest_test_store",
-  "version": "1.0.0",
-  "description": "",
+  "name": "jest_practise_store",
+  "version": "1.0.1",
+  "description": "A store to be used when practising writing tests in jest.",
   "main": "index.js",
   "scripts": {
     "test": "jest",
     "watch": "jest --watch",
     "build": "babel src/index.js --out-file index.js --presets=@babel/env",
-    "build-docs": "jsdoc src/index.js -d build/jsdocs -t ./node_modules/minami"
+    "build-docs": "jsdoc src/index.js -d build/jsdocs -t ./node_modules/minami",
+    "build-docs-dev": "jsdoc src/index.js -d build/jsdocs -t ./node_modules/minami -p"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Jake Hallam",
+  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.3",
