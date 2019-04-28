@@ -111,6 +111,17 @@ export function hasBeenChanged( store ){
     return wasHasBeenChangedChanged || wasTypeChanged || wasLengthChanged || doesValuesMatchExpected;
 }
 
-export function createCleanedStore(){
+/**
+ * If the store has been altered, returns a "clean" (un-altered) version of the original store.
+ * @param store 
+ */
+export function createCleanedStore( store ){
     
+    //Check if we actually new a new store
+    const hasStoreBeenChanged = store.hasBeenChanged || hasBeenChanged(store);
+
+    //Lol, this actually turned out to be all i needed!
+    const cleanedStore = ( hasStoreBeenChanged ) ? createStore( store.type, store.initialValueCount ) : {...store};
+
+    return cleanedStore;
 }
