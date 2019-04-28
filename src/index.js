@@ -33,7 +33,7 @@ const defaultValuesStore = Object.freeze({
  * That stores an array of a single type.
  * @param valuesType - [The type of the value, based on the typedef]
  * @return {object} [{
- *      types : valuesType,
+ *      type : valuesType,
  *      hasBeenChanged : false,
  *      initialValueCount : valuesCount,
  *      values : [ ... array of values... ]
@@ -63,21 +63,23 @@ export function generateValues(valuesType=typeof(""), valuesCount=10){
     return [...Array(valuesCount)].map( ( _, index) => (defaultValuesStore[valuesType])( index ) );
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /**
  * Return whether or not the values match.
+ * Recursively compares lists.
  * @param {*} a 
  * @param {*} b 
+ * @return bool whether or not they matched
  */
-const compareValuesValue = ( a, b ) => {
+const recursivelyCompareValue = ( a, b ) => {
     if( typeof(a) != typeof([]) ){
         return a === b;
     }
     else{
         const match = a
-            .map( (value, index) => compareValuesValue(value, b[index]) )
+            .map( (value, index) => recursivelyCompareValue(value, b[index]) )
             .reduce( (accumulator, x) => accumulator && x );
+
         return match;
     }
 }
@@ -85,9 +87,12 @@ const compareValuesValue = ( a, b ) => {
 const wereValuesAltered = ( store ) => {
     try{
         const expectedValues = generateValues( store.type, store.initialValueCount );
-        const matchingValuesArray = expectedValues.map( (value, index) => compareValuesValue(value, store.values[index]));
-        const wasAValueAltered = matchingValuesArray.reduce( ( a, x ) => a && x, true);
-        return !wasAValueAltered;
+        
+        const doAllMatch = recursivelyCompareValue( expectedValues, store.values );
+
+        const wasOneAltered = ( doAllMatch != true );
+        
+        return wasOneAltered;
     }
     catch(err){
         return true;
@@ -114,6 +119,7 @@ export function hasBeenChanged( store ){
 /**
  * If the store has been altered, returns a "clean" (un-altered) version of the original store.
  * @param store 
+ * @returns store - A new version of the store. Never a reference to the old one.
  */
 export function createCleanedStore( store ){
     
