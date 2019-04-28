@@ -19,7 +19,7 @@ describe("A function to generate values for the object", () => {
             if(givenUniqueness){
                 store.values.forEach( value => {
                     //Expect to find the given value, and no more.
-                    const matchingValues = store.filter( findValue => findValue == value );
+                    const matchingValues = store.values.filter( findValue => findValue == value );
                     expect(matchingValues.length).toBe(1);
                 });
             }
