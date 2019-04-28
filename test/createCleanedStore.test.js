@@ -24,15 +24,20 @@ describe('A function that creates a "cleaned" version of the store, given to it.
         forEachStoreType( ( store, type ) => {
             const cleanedStore = createCleanedStore(store);
             expect(store).toEqual(cleanedStore);
+
+            //expect it not just to return a refernce to the original store.
+            expect(store).not.toBe(cleanedStore);
         });
     });
 
     test("A store with more values than it's initial count has the values list reset", () => {
         forEachStoreType( ( store, type ) => {
-            const pushedValue = cleanedStore.values[0];
-            cleanedStore.values.append(pushedValue);
+            const storeCopy = {...store};
 
-            const cleanedStore = createCleanedStore(store);
+            const pushedValue = storeCopy.values[0];
+            storeCopy.values.push(pushedValue);
+
+            const cleanedStore = createCleanedStore(storeCopy);
 
             expect(cleanedStore.length).toBe(cleanedStore.initialCount);
             expect(cleanedStore.length).toBe(store.initialCount);
