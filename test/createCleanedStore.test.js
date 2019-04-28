@@ -52,7 +52,9 @@ describe('A function that creates a "cleaned" version of the store, given to it.
     test("A store that has an invalid type has a type error thrown when being cleaned", () => {
         forEachStoreType( ( store, type ) => { 
             store.type = "this is a nonsense type";
-            expect(createCleanedStore(store)).toThrow(/type/);
+            expect(() => {
+                createCleanedStore(store)
+            }).toThrow(/type/);
         });
     });
 
