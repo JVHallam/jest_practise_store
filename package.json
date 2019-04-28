@@ -5,15 +5,20 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "watch" : "jest --watch"
+    "watch": "jest --watch",
+    "build": "babel src/index.js --out-file index.js --presets=@babel/env",
+    "build-docs": "jsdoc src/index.js -d build/jsdocs -t ./node_modules/minami"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "babel-jest": "^24.7.1",
-    "jest": "^24.7.1"
+    "jest": "^24.7.1",
+    "jsdoc": "^3.5.5",
+    "minami": "^1.2.3"
   }
 }
