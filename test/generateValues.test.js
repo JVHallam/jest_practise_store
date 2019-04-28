@@ -32,7 +32,7 @@ describe("A function to generate values for the object", () => {
         count.forEach( length => {
             const store = createStore(typeof("string"), length);
 
-            expect(store.initialCount).toBe(length);
+            expect(store.initialValueCount).toBe(length);
             expect(store.values.length).toBe(length);
         });
     });
