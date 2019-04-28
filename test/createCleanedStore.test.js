@@ -46,7 +46,19 @@ describe('A function that creates a "cleaned" version of the store, given to it.
 
     test("A store where the type doesn't match the types in the array, is reset", () => {
         /* Change the type of the values */
-        expect("Test to have been implemented").toBe(true);
+        const expectedType = typeof(1);
+        const actualType = typeof("string");
+
+        const store = createStore(expectedType);
+        store.values[0] = "this is an error";
+
+        const cleanedStore = createCleanedStore(store);
+
+        const areValuesCorrect = cleanedStore.values
+                                    .map( value => typeof(value) == expectedType)
+                                    .reduce( (a,x) => a && x );
+
+        expect(areValuesCorrect).toBe(true);
     });
 
     test("A store that has an invalid type has a type error thrown when being cleaned", () => {
@@ -62,8 +74,10 @@ describe('A function that creates a "cleaned" version of the store, given to it.
         forEachStoreType( ( store, type ) => { 
             store.hasBeenChanged = true;
             const cleanedStore = createCleanedStore(store);
-            expect(cleanedStore.hasBeenChanged).toBe(false);
+
+            //Check for purity
             expect(store.hasBeenChanged).toBe(true);
+            expect(cleanedStore.hasBeenChanged).toBe(false);
         });
     });
 });
