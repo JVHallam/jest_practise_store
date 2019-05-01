@@ -1,4 +1,4 @@
-jest_practise_store
+jest-practise-store
 ===
 
 ### What?
